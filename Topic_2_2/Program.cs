@@ -1,19 +1,23 @@
-﻿using System.Text;
+﻿//поддержка кирилицы
+using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;
-Console.InputEncoding = Encoding.UTF8;                              //поддержка кирилицы
+Console.InputEncoding = Encoding.UTF8;                              
 
-const string president = "Путин";                                   //гравитация тут как будто не смотрелась
+//гравитация тут как будто не смотрелась
+const string president = "Путин";                                   
 
 int userAge = 23;
 string userName = "Олег";
 string userCite = "Москва";
 
-Console.WriteLine($@"==============================
+Console.WriteLine($@"
+==============================
 * Имя пользователя:{userName}      *
-* Возвраст пользователя: {userAge}  *
+* Возраст пользователя: {userAge}  *
 * Город пользователя: {userCite} *
 * Президент: {president}           *
-==============================");
+==============================
+");
 
 Console.ReadKey();
