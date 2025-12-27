@@ -3,29 +3,30 @@
 Console.OutputEncoding = Encoding.UTF8;
 Console.InputEncoding = Encoding.UTF8;
 
-const double AddFactor = 2;
-const double MultiplyFactor = 1.5;
-const double Divide = 3;
+const double addFactor = 2;
+const double multiplyFactor = 1.5;
+const double divide = 3;
 
 double first, second, third;
 
 Console.Write("Введите значение A: ");
-bool check = double.TryParse(Console.ReadLine(), out first);
+double.TryParse(Console.ReadLine(), out first);
 
 Console.Write("Введите значение B: ");
-bool check2 = double.TryParse(Console.ReadLine(), out second);
+double.TryParse(Console.ReadLine(), out second);
 
 Console.Write("Введите значение C: ");
-bool check3 = double.TryParse(Console.ReadLine(), out third);
+double.TryParse(Console.ReadLine(), out third);
 
 Console.Clear();
 
-double result1 = (first + second) * AddFactor;
-double result2 = second * MultiplyFactor;
-double result3 = (first + second + third) / Divide;
-double result4 = (second - first) * (third + AddFactor);
+double result1 = (first + second) * addFactor;
+double result2 = second * multiplyFactor;
+double result3 = (first + second + third) / divide;
+double result4 = (second - first) * (third + addFactor);
 
-Console.WriteLine($@"=====================
+Console.WriteLine($@"
+=====================
 Вводные значения:
 A: {first}
 B: {second}
