@@ -12,39 +12,40 @@ const string statusMassage = @"Виды аккаунтов: Стандарт, П
 const string nameMassage = "Введите имя покупателя: ";
 const string costMassage = "Введи стоимость товаров в виде целого положительного числа: ";
 
-string name = ReadNotEmptyString(nameMassage, invalidMassage);
+string name = ReadNotEmptyString(nameMassage);
 Console.Clear();
 
-string status = ReadAccountStatus(statusMassage, invalidMassage);
+string status = ReadAccountStatus(statusMassage);
 Console.Clear();
 
-uint cost = ReadUint(costMassage, invalidMassage);
+uint cost = ReadValidUint(costMassage);
 Console.Clear();
 
-double discount = CalculateDiscount(status);
-uint cashback = CalculateCashback(cost);
+double discount = CalculateDiscount();
+uint cashback = CalculateCashback();
 
 double discountCount = cost * discount;
 
 Console.Clear();
 
-PrintOrderSummary(name, status, cost, discountCount, cashback);
+PrintOrderSummary();
 
 
-void PrintOrderSummary(string name, string status, uint cost, double discountCost, uint cashbak)
+void PrintOrderSummary()
 {
-    Console.Write(@$"Имя: {name}!
+    Console.Write(@$"
+Имя: {name}
 Стоимость товаров: {cost}
 Статус аккаунта: {status}
-Стоимость с учетом скидки: {discountCost}
-Начислено кэшбэка : {cashbak}");
+Стоимость с учетом скидки: {discountCount}
+Начислено кэшбэка : {cashback}");
     
     Console.ReadKey();
 }
 
 // методы безопасного ввода
 // гарантированно возвращают валидное значение
-string ReadNotEmptyString(string massage, string errorMassage)
+string ReadNotEmptyString(string massage)
 {
     while (true)
     {
@@ -53,11 +54,11 @@ string ReadNotEmptyString(string massage, string errorMassage)
         if (value != "")
             return value;
     
-        InvalidInput(errorMassage);
+        InvalidInput();
     }
 }
 
-string ReadAccountStatus(string massage, string errorMassage)
+string ReadAccountStatus(string massage)
 {
     while (true)
     {
@@ -66,25 +67,25 @@ string ReadAccountStatus(string massage, string errorMassage)
         if (value == "Стандарт" || value == "Премиум" || value == "VIP")
             return value;
     
-        InvalidInput(errorMassage);
+        InvalidInput();
     }
 }
     
-uint ReadUint(string massage, string errorMassage)
+uint ReadValidUint(string massage)
 {
     while (true)
     {
-        uint result = 0;
+        uint result;
         string value = ReadInput(massage);
         
-        if (UintTryParse(value, out result))
+        if (TryParseUint(value, out result))
             return result;
     
-        InvalidInput(errorMassage);
+        InvalidInput();
     }
 }
 
-bool UintTryParse(string value, out uint result)
+bool TryParseUint(string value, out uint result)
 {
     return uint.TryParse(value, out result);
 }
@@ -95,14 +96,14 @@ string ReadInput(string? massage)
     return Console.ReadLine() ?? "";
 }
 
-void InvalidInput(string massage)
+void InvalidInput()
 {
     Console.Clear();
-    Console.WriteLine(massage);
+    Console.WriteLine(invalidMassage);
 }
 
 // скидка за аккаунт. Стандарт = 0%, Премиум = 5%, VIP = 10%
-double CalculateDiscount(string status)
+double CalculateDiscount()
 {
     if (status == "Стандарт") return 1.0;
     if (status == "Премиум")  return 0.95;
@@ -111,7 +112,7 @@ double CalculateDiscount(string status)
 }
 
 // кэшбэк - до 1000 = 1%, до 5000 = 2%, больше 5000 = 3%
-uint CalculateCashback(uint cost)
+uint CalculateCashback()
 {
     if (cost >= 5000)
         return Convert.ToUInt32(cost * 0.03);
